@@ -20,14 +20,16 @@ import ro.ps.chefmgmtbackend.dto.ChefResponseDTO;
 import ro.ps.chefmgmtbackend.service.ChefService;
 
 @RestController
-@RequestMapping("/v1/chef")
+@RequestMapping("/v1/chefs")
 @RequiredArgsConstructor
 public class ChefController {
 
     private final ChefService chefService;
 
     @GetMapping
-    public ResponseEntity<List<ChefResponseDTO>> findAll(@RequestParam(name = "name", required = false, defaultValue = "") String name) {
+    public ResponseEntity<List<ChefResponseDTO>> findAll(
+            @RequestParam(name = "name", required = false, defaultValue = "") String name
+    ) {
         return new ResponseEntity<>(
                 chefService.findAll(name),
                 HttpStatus.OK
