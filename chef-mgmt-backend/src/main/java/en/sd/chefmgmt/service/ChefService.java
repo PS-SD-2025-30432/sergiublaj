@@ -1,7 +1,7 @@
-package ro.ps.chefmgmtbackend.service;
+package en.sd.chefmgmt.service;
 
-import ro.ps.chefmgmtbackend.dto.ChefRequestDTO;
-import ro.ps.chefmgmtbackend.dto.ChefResponseDTO;
+import en.sd.chefmgmt.dto.ChefRequestDTO;
+import en.sd.chefmgmt.dto.ChefResponseDTO;
 
 import java.util.List;
 import java.util.UUID;

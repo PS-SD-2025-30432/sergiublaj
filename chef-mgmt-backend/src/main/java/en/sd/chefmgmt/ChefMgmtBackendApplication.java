@@ -1,4 +1,4 @@
-package ro.ps.chefmgmtbackend;
+package en.sd.chefmgmt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

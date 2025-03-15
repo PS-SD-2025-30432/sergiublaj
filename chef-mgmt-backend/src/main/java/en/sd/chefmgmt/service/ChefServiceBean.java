@@ -1,13 +1,13 @@
-package ro.ps.chefmgmtbackend.service;
+package en.sd.chefmgmt.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ro.ps.chefmgmtbackend.dto.ChefRequestDTO;
-import ro.ps.chefmgmtbackend.dto.ChefResponseDTO;
-import ro.ps.chefmgmtbackend.mapper.ChefMapper;
-import ro.ps.chefmgmtbackend.model.ChefEntity;
-import ro.ps.chefmgmtbackend.repository.ChefRepository;
+import en.sd.chefmgmt.dto.ChefRequestDTO;
+import en.sd.chefmgmt.dto.ChefResponseDTO;
+import en.sd.chefmgmt.mapper.ChefMapper;
+import en.sd.chefmgmt.model.ChefEntity;
+import en.sd.chefmgmt.repository.ChefRepository;
 
 import java.util.List;
 import java.util.UUID;

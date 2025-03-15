@@ -1,4 +1,4 @@
-package ro.ps.chefmgmtbackend.model;
+package en.sd.chefmgmt.model;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package ro.ps.chefmgmtbackend;
+package en.sd.chefmgmt;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

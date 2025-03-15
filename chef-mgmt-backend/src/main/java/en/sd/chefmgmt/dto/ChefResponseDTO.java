@@ -1,4 +1,4 @@
-package ro.ps.chefmgmtbackend.dto;
+package en.sd.chefmgmt.dto;
 
 import java.util.UUID;
 

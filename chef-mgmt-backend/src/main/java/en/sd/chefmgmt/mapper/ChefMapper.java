@@ -1,11 +1,11 @@
-package ro.ps.chefmgmtbackend.mapper;
+package en.sd.chefmgmt.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import ro.ps.chefmgmtbackend.dto.ChefRequestDTO;
-import ro.ps.chefmgmtbackend.dto.ChefResponseDTO;
-import ro.ps.chefmgmtbackend.model.ChefEntity;
+import en.sd.chefmgmt.dto.ChefRequestDTO;
+import en.sd.chefmgmt.dto.ChefResponseDTO;
+import en.sd.chefmgmt.model.ChefEntity;
 
 import java.util.List;
 

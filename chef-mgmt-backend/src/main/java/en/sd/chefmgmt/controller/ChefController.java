@@ -1,4 +1,4 @@
-package ro.ps.chefmgmtbackend.controller;
+package en.sd.chefmgmt.controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ro.ps.chefmgmtbackend.dto.ChefRequestDTO;
-import ro.ps.chefmgmtbackend.dto.ChefResponseDTO;
-import ro.ps.chefmgmtbackend.service.ChefService;
+import en.sd.chefmgmt.dto.ChefRequestDTO;
+import en.sd.chefmgmt.dto.ChefResponseDTO;
+import en.sd.chefmgmt.service.ChefService;
 
 @RestController
 @RequestMapping("/v1/chefs")
