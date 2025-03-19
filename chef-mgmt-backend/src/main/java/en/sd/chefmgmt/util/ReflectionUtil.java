@@ -3,10 +3,10 @@ package en.sd.chefmgmt.util;
 import java.lang.reflect.Field;
 import java.util.Optional;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public final class ReflectionUtil {
-
-    private ReflectionUtil() { }
-
 
     public static Optional<Object> getFieldValue(Object filter, String fieldName) {
         try {
