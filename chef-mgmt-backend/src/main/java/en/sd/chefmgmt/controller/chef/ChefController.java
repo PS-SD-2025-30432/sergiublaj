@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +40,7 @@ public interface ChefController {
             @ApiResponse(responseCode = "400", description = "Invalid filter parameters")
     })
     @ResponseStatus(HttpStatus.OK)
-    CollectionResponseDTO<ChefResponseDTO> findAll(ChefFilterDTO chefFilterDTO);
+    CollectionResponseDTO<ChefResponseDTO> findAll(@Validated ChefFilterDTO chefFilterDTO);
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a chef by ID", description = "Retrieve a chef's details using their unique ID.")

@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,31 +15,24 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final String DEFAULT_ERROR_MESSAGE = "Invalid value";
+    private static final String VALIDATION_FAILED_ERROR_MESSAGE = "Validation failed";
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ExceptionBody handleValidationErrors(MethodArgumentNotValidException exception) {
         Map<String, String> errors = exception.getBindingResult().getFieldErrors().stream()
                 .collect(Collectors.toMap(
                         FieldError::getField,
-                        error -> Objects.requireNonNullElse(error.getDefaultMessage(), "Invalid value"),
+                        error -> Objects.requireNonNullElse(error.getDefaultMessage(), DEFAULT_ERROR_MESSAGE),
                         (existing, replacement) -> existing
                 ));
 
         return ExceptionBody.builder()
                 .timestamp(ZonedDateTime.now())
                 .code(ExceptionCode.VALIDATION_ERROR.getCode())
-                .message("Validation failed")
+                .message(VALIDATION_FAILED_ERROR_MESSAGE)
                 .details(errors)
-                .build();
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ExceptionBody handleConstraintViolation(ConstraintViolationException exception) {
-        return ExceptionBody.builder()
-                .timestamp(ZonedDateTime.now())
-                .code(ExceptionCode.CONSTRAINT_VIOLATION.getCode())
-                .message(exception.getMessage())
                 .build();
     }
 
