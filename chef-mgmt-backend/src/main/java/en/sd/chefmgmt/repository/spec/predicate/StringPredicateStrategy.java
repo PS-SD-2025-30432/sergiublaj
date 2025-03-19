@@ -6,7 +6,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class StringPredicateStrategy implements PredicateStrategy {
+public class StringPredicateStrategy implements PredicateStrategy<String> {
 
     @Override
     public Optional<Predicate> createPredicate(
@@ -15,11 +15,9 @@ public class StringPredicateStrategy implements PredicateStrategy {
             Root<?> root,
             CriteriaBuilder criteriaBuilder
     ) {
-        return value instanceof String strValue
-                ? Optional.of(criteriaBuilder.like(
+        return Optional.of(criteriaBuilder.like(
                 criteriaBuilder.lower(root.get(field)),
-                "%" + strValue.toLowerCase() + "%"
-        ))
-                : Optional.empty();
+                "%" + ((String) value).toLowerCase() + "%"
+        ));
     }
 }

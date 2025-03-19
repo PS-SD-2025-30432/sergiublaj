@@ -8,14 +8,18 @@ import java.util.stream.Collectors;
 import en.sd.chefmgmt.repository.spec.predicate.PredicateFactory;
 import en.sd.chefmgmt.util.ReflectionUtil;
 import jakarta.persistence.criteria.Predicate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
+@RequiredArgsConstructor
 public abstract class EntitySpec<Entity, EntityFilterDTO> {
+
+    private final PredicateFactory predicateFactory;
 
     public Specification<Entity> createSpecification(EntityFilterDTO filter) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = getFieldValues(filter).entrySet().stream()
-                    .map(e -> PredicateFactory.createPredicate(e.getKey(), e.getValue(), root, criteriaBuilder))
+                    .map(e -> predicateFactory.createPredicate(e.getKey(), e.getValue(), root, criteriaBuilder))
                     .flatMap(Optional::stream)
                     .toList();
 

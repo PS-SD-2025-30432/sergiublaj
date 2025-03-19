@@ -6,7 +6,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class NumberPredicateStrategy implements PredicateStrategy {
+public class NumberPredicateStrategy implements PredicateStrategy<Number> {
 
     @Override
     public Optional<Predicate> createPredicate(
@@ -15,8 +15,6 @@ public class NumberPredicateStrategy implements PredicateStrategy {
             Root<?> root,
             CriteriaBuilder criteriaBuilder
     ) {
-        return value instanceof Number
-                ? Optional.of(criteriaBuilder.equal(root.get(field), value))
-                : Optional.empty();
+        return Optional.of(criteriaBuilder.equal(root.get(field), value));
     }
 }

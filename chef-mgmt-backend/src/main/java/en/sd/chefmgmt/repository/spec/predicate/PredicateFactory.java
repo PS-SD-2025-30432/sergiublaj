@@ -1,31 +1,32 @@
 package en.sd.chefmgmt.repository.spec.predicate;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import lombok.experimental.UtilityClass;
+import lombok.RequiredArgsConstructor;
 
-@UtilityClass
+@RequiredArgsConstructor
 public class PredicateFactory {
 
-    private static final List<PredicateStrategy> strategies = List.of(
-            new StringPredicateStrategy(),
-            new NumberPredicateStrategy(),
-            new DatePredicateStrategy()
-    );
+    private final Map<Class<?>, PredicateStrategy<?>> strategies;
 
-    public static Optional<Predicate> createPredicate(
+    public Optional<Predicate> createPredicate(
             String field,
             Object value,
             Root<?> root,
             CriteriaBuilder criteriaBuilder
     ) {
-        return strategies.stream()
-                .map(strategy -> strategy.createPredicate(field, value, root, criteriaBuilder))
-                .filter(Optional::isPresent)
-                .map(Optional::get).findFirst();
+        PredicateStrategy<?> strategy = strategies.entrySet().stream()
+                .filter(entry -> entry.getKey().isAssignableFrom(value.getClass()))
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .orElse(null);
+
+        return strategy != null
+                ? strategy.createPredicate(field, value, root, criteriaBuilder)
+                : Optional.empty();
     }
 }

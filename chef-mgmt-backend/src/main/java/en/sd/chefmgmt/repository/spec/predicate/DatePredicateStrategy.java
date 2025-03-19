@@ -7,7 +7,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class DatePredicateStrategy implements PredicateStrategy {
+public class DatePredicateStrategy implements PredicateStrategy<ZonedDateTime> {
 
     @Override
     public Optional<Predicate> createPredicate(
@@ -16,8 +16,6 @@ public class DatePredicateStrategy implements PredicateStrategy {
             Root<?> root,
             CriteriaBuilder criteriaBuilder
     ) {
-        return value instanceof ZonedDateTime dateValue
-                ? Optional.of(criteriaBuilder.equal(root.get(field), dateValue))
-                : Optional.empty();
+        return Optional.of(criteriaBuilder.equal(root.get(field), value));
     }
 }
