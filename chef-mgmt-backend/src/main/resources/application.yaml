@@ -18,6 +18,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+  swagger-ui:
+    enabled: true
+security:
+  secret-key: PS-SD-2025-30432-1q2w3e4r5t6y7u8i9o0p
+  token-expiration-days: 15
 server:
   port: 8777
   servlet:

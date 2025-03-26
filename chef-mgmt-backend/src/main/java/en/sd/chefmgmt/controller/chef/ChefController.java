@@ -2,10 +2,11 @@ package en.sd.chefmgmt.controller.chef;
 
 import java.util.UUID;
 
-import en.sd.chefmgmt.dto.CollectionResponseDTO;
-import en.sd.chefmgmt.dto.chef.ChefFilterDTO;
-import en.sd.chefmgmt.dto.chef.ChefRequestDTO;
-import en.sd.chefmgmt.dto.chef.ChefResponseDTO;
+import en.sd.chefmgmt.model.dto.CollectionResponseDTO;
+import en.sd.chefmgmt.model.dto.chef.ChefFilterDTO;
+import en.sd.chefmgmt.model.dto.chef.ChefRequestDTO;
+import en.sd.chefmgmt.model.dto.chef.ChefResponseDTO;
+import en.sd.chefmgmt.exception.model.ExceptionBody;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +26,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RequestMapping("/v1/chefs")
 @Tag(name = "Chef Management", description = "Operations for managing chefs")
 public interface ChefController {
@@ -37,9 +37,12 @@ public interface ChefController {
             @ApiResponse(responseCode = "200", description = "List of chefs retrieved successfully",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = CollectionResponseDTO.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid filter parameters")
+            @ApiResponse(responseCode = "400", description = "Invalid filter parameters",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ExceptionBody.class)))
     })
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     CollectionResponseDTO<ChefResponseDTO> findAll(@Validated ChefFilterDTO chefFilterDTO);
 
     @GetMapping("/{id}")
@@ -48,9 +51,12 @@ public interface ChefController {
             @ApiResponse(responseCode = "200", description = "Chef found",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ChefResponseDTO.class))),
-            @ApiResponse(responseCode = "404", description = "Chef not found")
+            @ApiResponse(responseCode = "404", description = "Chef not found",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ExceptionBody.class)))
     })
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR') or @authService.isSelf(#id)")
     ChefResponseDTO findById(@PathVariable(name = "id") UUID id);
 
     @PostMapping
@@ -59,9 +65,12 @@ public interface ChefController {
             @ApiResponse(responseCode = "201", description = "Chef created successfully",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ChefResponseDTO.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid request body")
+            @ApiResponse(responseCode = "400", description = "Invalid request body",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ExceptionBody.class)))
     })
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN')")
     ChefResponseDTO save(@RequestBody @Valid ChefRequestDTO chefRequestDTO);
 
     @PutMapping("/{id}")
@@ -70,18 +79,28 @@ public interface ChefController {
             @ApiResponse(responseCode = "200", description = "Chef updated successfully",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ChefResponseDTO.class))),
-            @ApiResponse(responseCode = "404", description = "Chef not found"),
-            @ApiResponse(responseCode = "400", description = "Invalid request body")
+            @ApiResponse(responseCode = "404", description = "Chef not found",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ExceptionBody.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request body",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ExceptionBody.class)))
     })
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ADMIN') or @authService.isSelf(#id)")
     ChefResponseDTO update(@PathVariable(name = "id") UUID id, @RequestBody @Valid ChefRequestDTO chefRequestDTO);
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a chef", description = "Remove a chef from the system using their ID.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Chef deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Chef not found")
+            @ApiResponse(responseCode = "204", description = "Chef deleted successfully",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ExceptionBody.class))),
+            @ApiResponse(responseCode = "404", description = "Chef not found",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ExceptionBody.class)))
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
     void delete(@PathVariable(name = "id") UUID id);
 }

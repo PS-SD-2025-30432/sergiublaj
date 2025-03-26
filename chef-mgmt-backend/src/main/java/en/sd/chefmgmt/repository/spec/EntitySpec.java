@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import en.sd.chefmgmt.repository.spec.predicate.PredicateFactory;
-import en.sd.chefmgmt.util.ReflectionUtil;
+import en.sd.chefmgmt.repository.spec.util.ReflectionUtil;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;

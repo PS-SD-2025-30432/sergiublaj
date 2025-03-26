@@ -6,7 +6,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public interface PredicateStrategy<ClassType> {
+public interface PredicateStrategy<Type> {
 
-    Optional<Predicate> createPredicate(String field, Object value, Root<?> root, CriteriaBuilder criteriaBuilder);
+    Optional<Predicate> createPredicate(String field, Type value, Root<?> root, CriteriaBuilder criteriaBuilder);
 }

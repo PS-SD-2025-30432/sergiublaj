@@ -2,15 +2,17 @@ package en.sd.chefmgmt.controller.chef;
 
 import java.util.UUID;
 
-import en.sd.chefmgmt.dto.CollectionResponseDTO;
-import en.sd.chefmgmt.dto.chef.ChefFilterDTO;
-import en.sd.chefmgmt.dto.chef.ChefRequestDTO;
-import en.sd.chefmgmt.dto.chef.ChefResponseDTO;
+import en.sd.chefmgmt.model.dto.CollectionResponseDTO;
+import en.sd.chefmgmt.model.dto.chef.ChefFilterDTO;
+import en.sd.chefmgmt.model.dto.chef.ChefRequestDTO;
+import en.sd.chefmgmt.model.dto.chef.ChefResponseDTO;
 import en.sd.chefmgmt.service.chef.ChefService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
+@RestController
 @RequiredArgsConstructor
 public class ChefControllerBean implements ChefController {
 

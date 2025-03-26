@@ -1,17 +1,27 @@
 package en.sd.chefmgmt.repository.spec.predicate;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import en.sd.chefmgmt.repository.spec.util.ReflectionUtil;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
+@Component
 public class PredicateFactory {
 
     private final Map<Class<?>, PredicateStrategy<?>> strategies;
+
+    public PredicateFactory(List<PredicateStrategy<?>> strategyList) {
+        this.strategies = strategyList.stream().collect(Collectors.toMap(
+                ReflectionUtil::getGenericType,
+                strategy -> strategy
+        ));
+    }
 
     public Optional<Predicate> createPredicate(
             String field,
@@ -19,14 +29,21 @@ public class PredicateFactory {
             Root<?> root,
             CriteriaBuilder criteriaBuilder
     ) {
-        PredicateStrategy<?> strategy = strategies.entrySet().stream()
-                .filter(entry -> entry.getKey().isAssignableFrom(value.getClass()))
-                .map(Map.Entry::getValue)
+        return strategies.entrySet().stream()
+                .filter(strategyTpe -> strategyTpe.getKey().isAssignableFrom(value.getClass()))
+                .map(strategyTpe -> createPredicate(strategyTpe.getValue(), field, value, root, criteriaBuilder))
                 .findFirst()
-                .orElse(null);
+                .orElse(Optional.empty());
+    }
 
-        return strategy != null
-                ? strategy.createPredicate(field, value, root, criteriaBuilder)
-                : Optional.empty();
+    @SuppressWarnings("unchecked")
+    private <Type> Optional<Predicate> createPredicate(
+            PredicateStrategy<?> strategy,
+            String field,
+            Object value,
+            Root<?> root,
+            CriteriaBuilder criteriaBuilder
+    ) {
+        return ((PredicateStrategy<Type>) strategy).createPredicate(field, (Type) value, root, criteriaBuilder);
     }
 }
