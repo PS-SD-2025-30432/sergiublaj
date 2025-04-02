@@ -7,7 +7,7 @@
         </button>
       </li>
 
-      @for (page of pages; track page) {
+      @for (page of pageRange(); track page) {
         <li class="page-item" [class.active]="page === currentPage">
           <button class="page-link" (click)="changePage(page)">{{ page + 1 }}</button>
         </li>
