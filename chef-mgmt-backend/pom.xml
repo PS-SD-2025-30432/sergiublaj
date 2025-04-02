@@ -19,13 +19,15 @@
     <properties>
         <flyway.version>11.4.0</flyway.version>
         <jackson.version>2.15.0</jackson.version>
-        <java.version>17</java.version>
+        <java.version>23</java.version>
         <jjwt.version>0.12.6</jjwt.version>
         <junit.version>5.12.1</junit.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
-        <lombok.version>1.18.30</lombok.version>
+        <lombok.version>1.18.36</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <maven.compiler.source>23</maven.compiler.source>
+        <maven.compiler.target>23</maven.compiler.target>
         <postgresql.version>42.7.5</postgresql.version>
         <spring-boot.version>3.4.4</spring-boot.version>
         <swagger-annotations.version>2.2.28</swagger-annotations.version>

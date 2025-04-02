@@ -23,7 +23,7 @@ public abstract class EntitySpec<Entity, EntityFilterDTO> {
                     .flatMap(Optional::stream)
                     .toList();
 
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+            return criteriaBuilder.or(predicates.toArray(new Predicate[0]));
         };
     }
 
