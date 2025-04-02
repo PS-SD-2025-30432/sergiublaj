@@ -1,0 +1,74 @@
+<div class="container mt-5">
+  @if (chefForm) {
+    <form [formGroup]="chefForm" class="card mx-auto" style="max-width: 500px;">
+      <div class="card-header text-center">
+        <i class="fas fa-user-tie fa-3x mb-2"></i><br/>
+        <strong>{{ chefForm.get('name')?.value }}</strong>
+      </div>
+
+      <div class="card-body">
+
+        <div class="mb-2">
+          <label class="form-label">Name:</label>
+          <input type="text" class="form-control" formControlName="name" />
+          @if (chefForm.get('name')?.invalid && chefForm.get('name')?.touched) {
+            <div class="text-danger small">Name is required.</div>
+          }
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Number of Stars:</label>
+          <input type="number" class="form-control" formControlName="rating" />
+          @if (chefForm.get('rating')?.invalid && chefForm.get('rating')?.touched) {
+            <div class="text-danger small">
+              @if (chefForm.get('rating')?.errors?.['required']) {
+                Rating is required.
+              }
+              @if (chefForm.get('rating')?.errors?.['min']) {
+                Rating must be at least 0.
+              }
+              @if (chefForm.get('rating')?.errors?.['max']) {
+                Rating cannot be more than 5.
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">CNP:</label>
+          <input type="text" class="form-control" formControlName="cnp" />
+          @if (chefForm.get('cnp')?.invalid && chefForm.get('cnp')?.touched) {
+            <div class="text-danger small">
+              @if (chefForm.get('cnp')?.errors?.['required']) {
+                CNP is required.
+              }
+              @if (chefForm.get('cnp')?.errors?.['pattern']) {
+                CNP must contain only digits.
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Birth Date:</label>
+          <input type="date" class="form-control" formControlName="birthDate" />
+          @if (chefForm.get('birthDate')?.invalid && chefForm.get('birthDate')?.touched) {
+            <div class="text-danger small">Birth date is required.</div>
+          }
+        </div>
+
+      </div>
+
+      <div class="card-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-danger" (click)="deleteChef()">
+          <i class="fas fa-trash"></i>
+        </button>
+        <button type="button" class="btn btn-outline-primary" [disabled]="chefForm.invalid" (click)="toggleEdit()">
+          <i class="fas" [ngClass]="editMode ? 'fa-save' : 'fa-pen'"></i>
+        </button>
+      </div>
+    </form>
+  } @else {
+    <div class="alert alert-info text-center mt-4">No chef selected.</div>
+  }
+</div>
