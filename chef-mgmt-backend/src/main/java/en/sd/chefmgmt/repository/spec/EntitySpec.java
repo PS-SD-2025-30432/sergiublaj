@@ -23,7 +23,9 @@ public abstract class EntitySpec<Entity, EntityFilterDTO> {
                     .flatMap(Optional::stream)
                     .toList();
 
-            return criteriaBuilder.or(predicates.toArray(new Predicate[0]));
+            return predicates.isEmpty()
+                    ? criteriaBuilder.conjunction()
+                    : criteriaBuilder.or(predicates.toArray(new Predicate[0]));
         };
     }
 
