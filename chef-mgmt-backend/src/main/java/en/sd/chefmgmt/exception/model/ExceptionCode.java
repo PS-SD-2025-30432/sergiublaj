@@ -18,6 +18,9 @@ public enum ExceptionCode {
     INVALID_CREDENTIALS("Invalid credentials.", "ERR_3001"),
     FORBIDDEN_ACCESS("Access is forbidden.", "ERR_3002"),
 
+    // User Errors
+    USER_NOT_FOUND("User %s not found.", "ERR_4001"),
+
     // Server Errors
     SERVER_ERROR("Internal server error.", "ERR_5000");
 

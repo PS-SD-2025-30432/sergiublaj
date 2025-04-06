@@ -1,36 +1,33 @@
-package en.sd.chefmgmt.controller.auth;
+package en.sd.chefmgmt.controller.user;
 
-import en.sd.chefmgmt.model.dto.auth.LoginRequestDTO;
-import en.sd.chefmgmt.model.dto.user.UserResponseDTO;
 import en.sd.chefmgmt.exception.model.ExceptionBody;
+import en.sd.chefmgmt.model.dto.user.UserResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@RequestMapping("/v1/auth")
-@Tag(name = "Authentication", description = "Operations for user authentication")
-public interface AuthController {
+@RequestMapping("/v1/users")
+@Tag(name = "User", description = "Operations for user authentication and login")
+public interface UserController {
 
-    @PostMapping("/login")
-    @Operation(summary = "User login", description = "Authenticate user credentials and return an authentication token.")
+    @GetMapping("/info")
+    @Operation(summary = "User info", description = "Retrieve user info based on access token.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Login successful",
+            @ApiResponse(responseCode = "200", description = "User info retrieved",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = UserResponseDTO.class))),
-            @ApiResponse(responseCode = "401", description = "Invalid credentials",
+            @ApiResponse(responseCode = "401", description = "Invalid access token",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = ExceptionBody.class)))
     })
     @ResponseStatus(HttpStatus.OK)
-    void login(@RequestBody @Valid LoginRequestDTO loginRequestDTO);
+    UserResponseDTO getUserInfo();
 }
