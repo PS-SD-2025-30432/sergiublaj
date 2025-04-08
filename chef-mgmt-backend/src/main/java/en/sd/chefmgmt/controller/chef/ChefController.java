@@ -89,7 +89,7 @@ public interface ChefController {
                             schema = @Schema(implementation = ExceptionBody.class)))
     })
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ADMIN') or @authService.isSelf(#id)")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR') or @authService.isSelf(#id)")
     ChefResponseDTO update(@PathVariable(name = "id") UUID id, @RequestBody @Valid ChefRequestDTO chefRequestDTO);
 
     @DeleteMapping("/{id}")
