@@ -40,6 +40,7 @@ public class SecurityUtil {
     public static Cookie buildCookie(String cookieName, String cookieValue, Integer tokenExpirationDays) {
         Cookie cookie = new Cookie(cookieName, cookieValue);
         cookie.setPath("/");
+        cookie.setSecure(true);
         cookie.setMaxAge((int) SecurityUtil.getExpirationDate(tokenExpirationDays).getTime());
 
         return cookie;

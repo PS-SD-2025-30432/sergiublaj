@@ -10,6 +10,7 @@ import javax.crypto.SecretKey;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import en.sd.chefmgmt.exception.model.ExceptionBody;
 import en.sd.chefmgmt.exception.model.ExceptionCode;
+import en.sd.chefmgmt.security.util.SecurityConstants;
 import en.sd.chefmgmt.security.util.SecurityProperties;
 import en.sd.chefmgmt.security.util.SecurityUtil;
 import io.jsonwebtoken.Claims;
@@ -68,9 +69,13 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (Exception exception) {
-            filterChain.doFilter(request, response);
-//            this.onUnsuccessfulAuthorization(response, exception.getMessage());
+            this.onUnsuccessfulAuthorization(response, exception.getMessage());
         }
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return SecurityConstants.AUTH_PATHS_TO_SKIP.contains(request.getRequestURI());
     }
 
     private void onUnsuccessfulAuthorization(HttpServletResponse response, String message) {

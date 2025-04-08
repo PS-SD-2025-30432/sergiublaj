@@ -28,9 +28,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/v1/chefs")
 @Tag(name = "Chef Management", description = "Operations for managing chefs")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public interface ChefController {
 
     @GetMapping
