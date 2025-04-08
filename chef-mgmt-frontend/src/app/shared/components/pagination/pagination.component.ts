@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pagination',
-  imports: [],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss'
 })

@@ -1,30 +1,74 @@
 import { Routes } from '@angular/router';
 import { ROUTES } from './core/config/routes.enum';
+import { isAuthenticated } from './core/guards/authentication/authentication.guard';
 
 
 export const routes: Routes = [
   {
     path: ROUTES.EMPTY,
     loadComponent: () => import('./core/components/home/home.component').then(m => m.HomeComponent),
+    canActivate: [ isAuthenticated ],
+    data: {
+      jwtTokenPresent: true,
+      redirectUrl: ROUTES.AUTH
+    }
+  },
+  {
+    path: ROUTES.AUTH,
+    loadChildren: () => import('./feature/authentication/authentication.routes').then(m => m.routes),
+    canActivate: [ isAuthenticated ],
+    data: {
+      jwtTokenPresent: false,
+      redirectUrl: ROUTES.CHEFS
+    }
   },
   {
     path: ROUTES.CHEFS,
-    loadComponent: () => import('./feature/chefs/chefs/chefs.component').then(m => m.ChefsComponent),
+    loadChildren: () => import('./feature/chefs/chefs.routes').then(m => m.routes),
+    canActivate: [ isAuthenticated ],
+    data: {
+      jwtTokenPresent: true,
+      redirectUrl: ROUTES.AUTH
+    }
   },
   {
-    path: `${ROUTES.CHEFS}/:id`,
-    loadComponent: () => import('./feature/chefs/chef/chef.component').then(m => m.ChefComponent),
+    path: ROUTES.PROFILE,
+    loadChildren: () => import('./feature/profile/profile.routes').then(m => m.routes),
+    canActivate: [ isAuthenticated ],
+    data: {
+      jwtTokenPresent: true,
+      redirectUrl: ROUTES.AUTH
+    }
   },
   {
     path: ROUTES.ABOUT,
     loadComponent: () => import('./core/components/about/about.component').then(m => m.AboutComponent),
+    canActivate: [ isAuthenticated ],
+    data: {
+      jwtTokenPresent: true,
+      redirectUrl: ROUTES.AUTH
+    }
   },
   {
     path: ROUTES.NOT_FOUND,
     loadComponent: () => import('./core/components/not-found/not-found.component').then(m => m.NotFoundComponent),
+    canActivate: [ isAuthenticated ],
+    data: {
+      jwtTokenPresent: true,
+      redirectUrl: ROUTES.AUTH
+    }
+  },
+  {
+    path: ROUTES.FORBIDDEN,
+    loadComponent: () => import('./core/components/forbidden/forbidden.component').then(m => m.ForbiddenComponent),
+    canActivate: [ isAuthenticated ],
+    data: {
+      jwtTokenPresent: true,
+      redirectUrl: ROUTES.AUTH
+    }
   },
   {
     path: ROUTES.ALL,
-    loadComponent: () => import('./core/components/not-found/not-found.component').then(m => m.NotFoundComponent),
-  },
+    redirectTo: ROUTES.NOT_FOUND
+  }
 ];

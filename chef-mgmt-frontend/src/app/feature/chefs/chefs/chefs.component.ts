@@ -3,11 +3,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { PaginationComponent } from '../../../core/components/pagination/pagination.component';
-import { SearchBarComponent } from '../../../core/components/search-bar/search-bar.component';
 import { ChefService } from '../../../core/services/chef/chef.service';
+import { ModalService } from '../../../core/services/modal/modal.service';
 import { buildChefFilterDTOFromSearchBy } from '../../../core/utils/rest-utils';
-import { ChefResponseDTO } from '../models/chef-response-dto.model';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar.component';
+import { ModalType } from '../../../shared/models/modal-type.enum';
+import { ChefResponse } from '../models/chef-response.model';
 
 
 @Component({
@@ -25,7 +27,7 @@ import { ChefResponseDTO } from '../models/chef-response-dto.model';
 })
 export class ChefsComponent implements OnInit {
 
-  chefs: ChefResponseDTO[] = [];
+  chefs: ChefResponse[] = [];
   loading = true;
   error: string | null = null;
   addChefForm!: FormGroup;
@@ -36,7 +38,8 @@ export class ChefsComponent implements OnInit {
   constructor(
     private chefService: ChefService,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +68,6 @@ export class ChefsComponent implements OnInit {
     });
   }
 
-
   private buildChefForm(): void {
     this.addChefForm = this.fb.group({
       name: [ '', [ Validators.required ] ],
@@ -91,9 +93,10 @@ export class ChefsComponent implements OnInit {
           this.chefs.push(savedChef);
           this.addChefForm.reset();
           this.showAddForm = false;
+          this.modalService.open('Success', 'Chef has been successfully added!', ModalType.SUCCESS);
         },
         error: (error: HttpErrorResponse) => {
-          alert(error.error.message);
+          this.modalService.open('Error', error.error.message, ModalType.ERROR);
         }
       });
     }

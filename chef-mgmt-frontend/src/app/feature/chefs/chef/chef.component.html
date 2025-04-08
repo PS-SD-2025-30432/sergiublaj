@@ -1,6 +1,6 @@
 <div class="container mt-5">
   @if (chefForm) {
-    <form [formGroup]="chefForm" class="card mx-auto" style="max-width: 500px;">
+    <form [formGroup]="chefForm" class="card mx-auto chef-form">
       <div class="card-header text-center">
         <i class="fas fa-user-tie fa-3x mb-2"></i><br/>
         <strong>{{ chefForm.get('name')?.value }}</strong>
@@ -10,7 +10,7 @@
 
         <div class="mb-2">
           <label class="form-label">Name:</label>
-          <input type="text" class="form-control" formControlName="name" />
+          <input type="text" class="form-control" formControlName="name"/>
           @if (chefForm.get('name')?.invalid && chefForm.get('name')?.touched) {
             <div class="text-danger small">Name is required.</div>
           }
@@ -18,7 +18,7 @@
 
         <div class="mb-2">
           <label class="form-label">Number of Stars:</label>
-          <input type="number" class="form-control" formControlName="rating" />
+          <input type="number" class="form-control" formControlName="rating"/>
           @if (chefForm.get('rating')?.invalid && chefForm.get('rating')?.touched) {
             <div class="text-danger small">
               @if (chefForm.get('rating')?.errors?.['required']) {
@@ -36,7 +36,7 @@
 
         <div class="mb-2">
           <label class="form-label">CNP:</label>
-          <input type="text" class="form-control" formControlName="cnp" />
+          <input type="text" class="form-control" formControlName="cnp"/>
           @if (chefForm.get('cnp')?.invalid && chefForm.get('cnp')?.touched) {
             <div class="text-danger small">
               @if (chefForm.get('cnp')?.errors?.['required']) {
@@ -51,7 +51,7 @@
 
         <div class="mb-2">
           <label class="form-label">Birth Date:</label>
-          <input type="date" class="form-control" formControlName="birthDate" />
+          <input type="date" class="form-control" formControlName="birthDate"/>
           @if (chefForm.get('birthDate')?.invalid && chefForm.get('birthDate')?.touched) {
             <div class="text-danger small">Birth date is required.</div>
           }
@@ -60,12 +60,16 @@
       </div>
 
       <div class="card-footer d-flex justify-content-between">
-        <button type="button" class="btn btn-outline-danger" (click)="deleteChef()">
-          <i class="fas fa-trash"></i>
-        </button>
-        <button type="button" class="btn btn-outline-primary" [disabled]="chefForm.invalid" (click)="toggleEdit()">
-          <i class="fas" [ngClass]="editMode ? 'fa-save' : 'fa-pen'"></i>
-        </button>
+        @if (loggedUser?.role == Role.ADMIN) {
+          <button type="button" class="btn btn-outline-danger" (click)="deleteChef()">
+            <i class="fas fa-trash"></i>
+          </button>
+        }
+        @if (loggedUser?.role == Role.ADMIN || loggedUser?.role == Role.MODERATOR) {
+          <button type="button" class="btn btn-outline-primary" [disabled]="chefForm.invalid" (click)="toggleEdit()">
+            <i class="fas" [ngClass]="editMode ? 'fa-save' : 'fa-pen'"></i>
+          </button>
+        }
       </div>
     </form>
   } @else {

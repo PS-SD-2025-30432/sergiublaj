@@ -1,4 +1,4 @@
-export interface FilterRequestDTO {
+export interface FilterRequest {
   pageNumber: number;
   pageSize: number;
 }

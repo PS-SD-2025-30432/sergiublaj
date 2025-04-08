@@ -1,9 +1,9 @@
 import { HttpParams } from '@angular/common/http';
-import { ChefFilterDTO } from '../../feature/chefs/models/chef-filter-dto.model';
+import { ChefFilter } from '../../feature/chefs/models/chef-filter.model';
 import { apiConfig } from '../config/api-config';
 
 
-export const buildChefFilterDTOFromSearchBy = (searchBy: string | null, page: number): ChefFilterDTO => {
+export const buildChefFilterDTOFromSearchBy = (searchBy: string | null, page: number): ChefFilter => {
   if (!searchBy) {
     return {
       pageNumber: page,
@@ -25,7 +25,7 @@ export const buildChefFilterDTOFromSearchBy = (searchBy: string | null, page: nu
   };
 };
 
-export const buildChefQueryParams = (filter?: ChefFilterDTO): HttpParams => {
+export const buildChefQueryParams = (filter?: ChefFilter): HttpParams => {
   return Object.entries(filter || {})
     .reduce((params, [ key, value ]) => value != null && value !== '' ? params.set(key, String(value)) : params,
       new HttpParams()
