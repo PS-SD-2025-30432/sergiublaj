@@ -72,7 +72,7 @@ public interface ChefController {
                             schema = @Schema(implementation = ExceptionBody.class)))
     })
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
     ChefResponseDTO save(@RequestBody @Valid ChefRequestDTO chefRequestDTO);
 
     @PutMapping("/{id}")
