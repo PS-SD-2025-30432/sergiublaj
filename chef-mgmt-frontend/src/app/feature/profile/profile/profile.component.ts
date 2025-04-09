@@ -13,13 +13,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   user?: UserResponse;
   userSubscription?: Subscription;
+  birthDate?: string;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.userSubscription = this.authService.user$
       .pipe(filter(response => !!response))
-      .subscribe(response => this.user = response);
+      .subscribe(response => {
+        this.user = response;
+        this.birthDate = new Date(response.birthDate).toISOString().split('T')[0];
+      });
   }
 
   ngOnDestroy(): void {
