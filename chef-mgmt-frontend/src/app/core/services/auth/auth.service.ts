@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginRequest } from '../../../feature/authentication/models/login-request.model';
 import { UserResponse } from '../../../feature/profile/models/user-response.model';
@@ -18,7 +18,7 @@ export class AuthService implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +31,7 @@ export class AuthService implements OnInit {
 
   logout(): void {
     this.clearUser();
-    window.location.reload();
+    this.router.navigateByUrl(ROUTES.AUTH).then();
   }
 
   setUser(user: UserResponse) {
@@ -45,7 +45,7 @@ export class AuthService implements OnInit {
     if (isLocalStorageAvailable()) {
       localStorage.removeItem('loggedUser');
     }
-    this.cookieService.delete('jwt-token');
+    this.clearCookies();
     this.userSubject.next(null);
   }
 
@@ -53,5 +53,16 @@ export class AuthService implements OnInit {
     return isLocalStorageAvailable()
       ? JSON.parse(localStorage.getItem('loggedUser') || 'null')
       : null;
+  }
+
+  // cookieService.delete('jwt-token') doesn't work 100%
+  private clearCookies(): void {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const equalPos = cookie.indexOf('=');
+      const name = equalPos > -1 ? cookie.slice(0, equalPos) : cookie;
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;';
+    }
   }
 }

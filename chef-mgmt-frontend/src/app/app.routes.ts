@@ -9,7 +9,7 @@ export const routes: Routes = [
     loadComponent: () => import('./core/components/home/home.component').then(m => m.HomeComponent),
     canActivate: [ isAuthenticated ],
     data: {
-      jwtTokenPresent: true,
+      authenticated: true,
       redirectUrl: ROUTES.AUTH
     }
   },
@@ -18,7 +18,7 @@ export const routes: Routes = [
     loadChildren: () => import('./feature/authentication/authentication.routes').then(m => m.routes),
     canActivate: [ isAuthenticated ],
     data: {
-      jwtTokenPresent: false,
+      authenticated: false,
       redirectUrl: ROUTES.CHEFS
     }
   },
@@ -27,7 +27,7 @@ export const routes: Routes = [
     loadChildren: () => import('./feature/chefs/chefs.routes').then(m => m.routes),
     canActivate: [ isAuthenticated ],
     data: {
-      jwtTokenPresent: true,
+      authenticated: true,
       redirectUrl: ROUTES.AUTH
     }
   },
@@ -36,7 +36,7 @@ export const routes: Routes = [
     loadChildren: () => import('./feature/profile/profile.routes').then(m => m.routes),
     canActivate: [ isAuthenticated ],
     data: {
-      jwtTokenPresent: true,
+      authenticated: true,
       redirectUrl: ROUTES.AUTH
     }
   },
@@ -45,7 +45,7 @@ export const routes: Routes = [
     loadComponent: () => import('./core/components/about/about.component').then(m => m.AboutComponent),
     canActivate: [ isAuthenticated ],
     data: {
-      jwtTokenPresent: true,
+      authenticated: true,
       redirectUrl: ROUTES.AUTH
     }
   },
@@ -54,7 +54,7 @@ export const routes: Routes = [
     loadComponent: () => import('./core/components/not-found/not-found.component').then(m => m.NotFoundComponent),
     canActivate: [ isAuthenticated ],
     data: {
-      jwtTokenPresent: true,
+      authenticated: true,
       redirectUrl: ROUTES.AUTH
     }
   },
@@ -63,7 +63,7 @@ export const routes: Routes = [
     loadComponent: () => import('./core/components/forbidden/forbidden.component').then(m => m.ForbiddenComponent),
     canActivate: [ isAuthenticated ],
     data: {
-      jwtTokenPresent: true,
+      authenticated: true,
       redirectUrl: ROUTES.AUTH
     }
   },

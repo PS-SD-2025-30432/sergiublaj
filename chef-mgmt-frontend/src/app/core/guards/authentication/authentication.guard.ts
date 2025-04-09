@@ -1,21 +1,19 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { map, take } from 'rxjs/operators';
+import { AuthService } from '../../services/auth/auth.service';
 
 
 export const isAuthenticated: CanActivateFn = (route: ActivatedRouteSnapshot) => {
-  const router: Router = inject(Router);
-  const jwtTokenPresent: boolean = route.data['jwtTokenPresent'];
-  const redirectUrl: string = route.data['redirectUrl'];
-  const hasCookie: boolean = isCookiePresent();
+  const router = inject(Router);
+  const authService = inject(AuthService);
 
-  return jwtTokenPresent === hasCookie
-    ? true
-    : router.navigateByUrl(redirectUrl).then();
-};
+  const authenticated = route.data?.['authenticated'];
+  const redirectUrl = route.data?.['redirectUrl'];
 
-const isCookiePresent = (): boolean => {
-  const cookieService = inject(CookieService);
-
-  return cookieService.check('jwt-token');
+  // fetching the user sync won't work (authService.userSubject.value);
+  return authService.userSubject.pipe(
+    take(1),
+    map(user => (authenticated === !!user ? true : router.parseUrl(redirectUrl)))
+  );
 };

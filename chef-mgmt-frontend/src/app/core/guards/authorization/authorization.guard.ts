@@ -1,18 +1,21 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
-import { UserResponse } from '../../../feature/profile/models/user-response.model';
+import { map, take } from 'rxjs/operators';
 import { ROUTES } from '../../config/routes.enum';
 import { AuthService } from '../../services/auth/auth.service';
 
 
 export const hasAuthorization: CanActivateFn = (route: ActivatedRouteSnapshot) => {
-  const router: Router = inject(Router);
-  const requiredRoles: string[] = route.data['requiredRoles'];
-  const isSelf: boolean = route.data['isSelf'];
-  const authService: AuthService = inject(AuthService);
-  const loggedUser: UserResponse = authService.userSubject.value;
+  const router = inject(Router);
+  const authService = inject(AuthService);
 
-  return requiredRoles.includes(loggedUser?.role) || isSelf && loggedUser?.id === route.params['id']
-    ? true
-    : router.navigateByUrl(ROUTES.FORBIDDEN).then();
+  const requiredRoles = route.data?.['requiredRoles'] ?? [];
+  const isSelf = route.data?.['isSelf'] ?? false;
+  const userIdFromParams = route.params['id'];
+
+  // fetching the user sync won't work (authService.userSubject.value);
+  return authService.userSubject.pipe(
+    take(1),
+    map(user => (requiredRoles.includes(user?.role) || (isSelf && user?.id === userIdFromParams) ? true : router.parseUrl(ROUTES.FORBIDDEN)))
+  );
 };
