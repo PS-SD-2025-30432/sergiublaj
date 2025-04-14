@@ -21,8 +21,11 @@ public enum ExceptionCode {
     // User Errors
     USER_NOT_FOUND("User %s not found.", "ERR_4001"),
 
+    // RestTemplate Errors
+    REST_TEMPLATE_ERROR("Error occurred while calling external service: %s", "ERR_5001"),
+
     // Server Errors
-    SERVER_ERROR("Internal server error.", "ERR_5000");
+    SERVER_ERROR("Internal server error.", "ERR_9000");
 
     private final String message;
     private final String code;

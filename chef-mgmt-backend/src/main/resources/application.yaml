@@ -27,3 +27,5 @@ server:
   port: 8777
   servlet:
     context-path: '/api'
+chef-mgmt-mail:
+  sync-mail-url: http://localhost:8888/api/v1/mail/sync

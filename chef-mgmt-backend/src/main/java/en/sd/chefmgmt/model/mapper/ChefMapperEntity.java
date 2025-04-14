@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface ChefMapper extends DtoMapper<ChefEntity, ChefRequestDTO, ChefResponseDTO> {
+public interface ChefMapperEntity extends EntityDtoMapper<ChefEntity, ChefRequestDTO, ChefResponseDTO> {
 
     @Override
     @Mapping(target = "numberOfStars", source = "rating")

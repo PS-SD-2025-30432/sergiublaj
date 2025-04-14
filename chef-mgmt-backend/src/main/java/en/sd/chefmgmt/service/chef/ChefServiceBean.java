@@ -9,7 +9,7 @@ import en.sd.chefmgmt.model.dto.chef.ChefResponseDTO;
 import en.sd.chefmgmt.exception.model.DataNotFoundException;
 import en.sd.chefmgmt.exception.model.DuplicateDataException;
 import en.sd.chefmgmt.exception.model.ExceptionCode;
-import en.sd.chefmgmt.model.mapper.ChefMapper;
+import en.sd.chefmgmt.model.mapper.ChefMapperEntity;
 import en.sd.chefmgmt.model.entity.ChefEntity;
 import en.sd.chefmgmt.repository.chef.ChefRepository;
 import en.sd.chefmgmt.repository.chef.ChefSpec;
@@ -26,7 +26,7 @@ public class ChefServiceBean implements ChefService {
 
     private final ChefRepository chefRepository;
     private final ChefSpec chefSpec;
-    private final ChefMapper chefMapper;
+    private final ChefMapperEntity chefMapper;
 
     @Override
     public CollectionResponseDTO<ChefResponseDTO> findAll(ChefFilterDTO filter) {
