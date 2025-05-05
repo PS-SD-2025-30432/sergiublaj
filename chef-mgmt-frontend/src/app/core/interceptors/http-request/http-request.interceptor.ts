@@ -8,14 +8,16 @@ export const httpRequestInterceptor: HttpInterceptorFn = (req, next) => {
   const modifiedReq = req.clone({
     url: getUrl(req.url),
     headers: getHeaders(),
-    withCredentials: true,
+    withCredentials: true
   });
 
   return next(modifiedReq);
 };
 
 const getUrl = (url: string): string => {
-  return `${environment.baseUrl}${url}`;
+  return url.includes('mail')
+    ? `${environment.mailUrl}${url}`
+    : `${environment.apiUrl}${url}`;
 };
 
 const getHeaders = (): HttpHeaders => {
