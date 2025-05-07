@@ -2,17 +2,17 @@ package en.sd.chefmgmt.service.mail;
 
 import en.sd.chefmgmt.model.dto.mail.MailRequestDTO;
 import en.sd.chefmgmt.model.dto.mail.MailResponseDTO;
-import en.sd.chefmgmt.resttemplate.WebClientBase;
+import en.sd.chefmgmt.rest.WebClientBase;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@Service
-public class MailServiceBean extends WebClientBase<MailRequestDTO, MailResponseDTO> implements MailService {
+@Service("syncMailService")
+public class SyncMailServiceBean extends WebClientBase<MailRequestDTO, MailResponseDTO> implements MailService {
 
     private final String url;
 
-    public MailServiceBean(
+    public SyncMailServiceBean(
             WebClient.Builder webClientBuilder,
             @Value("${chef-mgmt-mail.sync-mail-url}") String url
     ) {

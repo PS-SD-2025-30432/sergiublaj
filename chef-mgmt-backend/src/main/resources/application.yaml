@@ -1,6 +1,9 @@
 spring:
   application:
     name: chef-mgmt-backend
+  artemis:
+    broker-url: tcp://localhost:61616
+    mode: native
   datasource:
     url: jdbc:postgresql://localhost:5432/chef_mgmt_db
     username: postgres
@@ -29,3 +32,4 @@ server:
     context-path: '/api'
 chef-mgmt-mail:
   sync-mail-url: http://localhost:8888/api/v1/mail/sync
+  async-mail-request-queue: mail-request-queue

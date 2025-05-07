@@ -1,4 +1,4 @@
-package en.sd.chefmgmt.resttemplate;
+package en.sd.chefmgmt.rest;
 
 import en.sd.chefmgmt.exception.model.ExceptionCode;
 import en.sd.chefmgmt.exception.model.RestTemplateException;

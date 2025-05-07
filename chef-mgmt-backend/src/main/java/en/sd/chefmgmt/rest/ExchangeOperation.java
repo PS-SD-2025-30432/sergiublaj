@@ -1,4 +1,4 @@
-package en.sd.chefmgmt.resttemplate;
+package en.sd.chefmgmt.rest;
 
 public interface ExchangeOperation<Request, Response> {
 

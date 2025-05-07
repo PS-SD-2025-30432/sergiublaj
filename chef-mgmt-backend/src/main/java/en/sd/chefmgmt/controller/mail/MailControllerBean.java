@@ -14,14 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class MailControllerBean implements MailController {
 
     private final AuthService authService;
-    private final MailService mailService;
+    private final MailService syncMailService;
+    private final MailService asyncMailService;
 
     @Override
     public MailResponseDTO sendSyncMail(MailRequestDTO mailRequestDTO) {
         MailRequestDTO mailRequest = mailRequestDTO.withFrom(authService.getLoggedUser());
         log.info("Sync mail request from {} to {}", mailRequest.from(), mailRequest.to());
 
-        return mailService.sendMail(mailRequest);
+        return syncMailService.sendMail(mailRequest);
+    }
+
+    @Override
+    public MailResponseDTO sendAsyncMail(MailRequestDTO mailRequestDTO) {
+        MailRequestDTO mailRequest = mailRequestDTO.withFrom(authService.getLoggedUser());
+        log.info("Async mail request from {} to {}", mailRequest.from(), mailRequest.to());
+
+        return asyncMailService.sendMail(mailRequest);
     }
 }
 

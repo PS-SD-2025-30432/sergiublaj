@@ -33,4 +33,17 @@ public interface MailController {
     })
     @ResponseStatus(HttpStatus.OK)
     MailResponseDTO sendSyncMail(@Validated @RequestBody MailRequestDTO mailRequestDTO);
+
+    @PostMapping("/async")
+    @Operation(summary = "Send async mail", description = "Sends asynchronous mail")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Mail successfully sent",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = MailResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ExceptionBody.class)))
+    })
+    @ResponseStatus(HttpStatus.OK)
+    MailResponseDTO sendAsyncMail(@Validated @RequestBody MailRequestDTO mailRequestDTO);
 }
