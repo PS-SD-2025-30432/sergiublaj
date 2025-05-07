@@ -17,6 +17,7 @@
         <module>mail-adapter</module>
         <module>persistence-adapter</module>
         <module>rest-adapter</module>
+        <module>jms-adapter</module>
     </modules>
 
     <parent>
@@ -72,6 +73,11 @@
             <dependency>
                 <groupId>en.sd</groupId>
                 <artifactId>mail-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>en.sd</groupId>
+                <artifactId>jms-adapter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -1,0 +1,2 @@
+queues:
+  mail-request-queue: mail-request-queue
