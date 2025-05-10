@@ -1,0 +1,2 @@
+INSERT INTO chef (id, name, cnp, birth_date, rating)
+VALUES ('11111111-1111-1111-1111-111111111111', 'John Doe', '1234567890123', '1990-01-01T10:00:00', 4.2);

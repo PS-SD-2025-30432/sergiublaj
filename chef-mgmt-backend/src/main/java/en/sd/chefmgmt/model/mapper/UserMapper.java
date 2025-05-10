@@ -6,7 +6,7 @@ import en.sd.chefmgmt.model.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = ChefMapperEntity.class)
+@Mapper(componentModel = "spring", uses = ChefEntityMapper.class)
 public interface UserMapper {
 
     @Mapping(target = "id", source = "user.id")

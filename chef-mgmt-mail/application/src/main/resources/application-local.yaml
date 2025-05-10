@@ -1,0 +1,7 @@
+spring:
+  artemis:
+    user: admin
+    password: admin
+  mail:
+    username: 7740930017a403
+    password: df310892216a7c

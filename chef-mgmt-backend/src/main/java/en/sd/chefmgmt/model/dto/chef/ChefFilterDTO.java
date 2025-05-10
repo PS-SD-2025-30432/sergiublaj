@@ -5,7 +5,9 @@ import java.util.Objects;
 
 import en.sd.chefmgmt.controller.util.RestUtil;
 import jakarta.validation.constraints.Min;
+import lombok.Builder;
 
+@Builder
 public record ChefFilterDTO(
         String name,
         Double rating,

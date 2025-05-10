@@ -7,7 +7,9 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
+@Builder
 public record ChefRequestDTO(
         @NotBlank(message = "Name is required and cannot be empty.")
         @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters.")

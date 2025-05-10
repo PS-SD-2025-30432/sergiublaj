@@ -9,7 +9,7 @@ import en.sd.chefmgmt.model.dto.chef.ChefResponseDTO;
 import en.sd.chefmgmt.exception.model.DataNotFoundException;
 import en.sd.chefmgmt.exception.model.DuplicateDataException;
 import en.sd.chefmgmt.exception.model.ExceptionCode;
-import en.sd.chefmgmt.model.mapper.ChefMapperEntity;
+import en.sd.chefmgmt.model.mapper.ChefEntityMapper;
 import en.sd.chefmgmt.model.entity.ChefEntity;
 import en.sd.chefmgmt.repository.chef.ChefRepository;
 import en.sd.chefmgmt.repository.chef.ChefSpec;
@@ -26,7 +26,7 @@ public class ChefServiceBean implements ChefService {
 
     private final ChefRepository chefRepository;
     private final ChefSpec chefSpec;
-    private final ChefMapperEntity chefMapper;
+    private final ChefEntityMapper chefEntityMapper;
 
     @Override
     public CollectionResponseDTO<ChefResponseDTO> findAll(ChefFilterDTO filter) {
@@ -39,7 +39,7 @@ public class ChefServiceBean implements ChefService {
                 .pageSize(page.getPageSize())
                 .totalPages(chefs.getTotalPages())
                 .totalElements(chefs.getTotalElements())
-                .elements(chefMapper.convertEntitiesToResponseDtos(chefs.getContent()))
+                .elements(chefEntityMapper.convertEntitiesToResponseDtos(chefs.getContent()))
                 .build();
     }
 
@@ -48,7 +48,7 @@ public class ChefServiceBean implements ChefService {
         ChefEntity chefEntity = chefRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(ExceptionCode.CHEF_NOT_FOUND, id));
 
-        return chefMapper.convertEntityToResponseDto(chefEntity);
+        return chefEntityMapper.convertEntityToResponseDto(chefEntity);
     }
 
     @Override
@@ -58,10 +58,10 @@ public class ChefServiceBean implements ChefService {
             throw new DuplicateDataException(ExceptionCode.CNP_TAKEN, chefRequestDTO.cnp());
         }
 
-        ChefEntity chefToBeAdded = chefMapper.convertRequestDtoToEntity(chefRequestDTO);
+        ChefEntity chefToBeAdded = chefEntityMapper.convertRequestDtoToEntity(chefRequestDTO);
         ChefEntity chefAdded = chefRepository.save(chefToBeAdded);
 
-        return chefMapper.convertEntityToResponseDto(chefAdded);
+        return chefEntityMapper.convertEntityToResponseDto(chefAdded);
     }
 
     @Override
@@ -73,10 +73,10 @@ public class ChefServiceBean implements ChefService {
             throw new DuplicateDataException(ExceptionCode.CNP_TAKEN, chefRequestDTO.cnp());
         }
 
-        chefMapper.updateChefEntity(existingChef, chefRequestDTO);
+        chefEntityMapper.updateChefEntity(existingChef, chefRequestDTO);
         ChefEntity chefEntitySaved = chefRepository.save(existingChef);
 
-        return chefMapper.convertEntityToResponseDto(chefEntitySaved);
+        return chefEntityMapper.convertEntityToResponseDto(chefEntitySaved);
     }
 
     @Override
