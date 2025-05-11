@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -71,6 +72,14 @@ class ChefControllerIT {
     }
 
     @Test
+    void givenNoAuth_whenGetChefById_thenReturn403() throws Exception {
+        // when + then
+        mockMvc.perform(get("/v1/chefs/" + EXISTING_CHEF_ID))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DirtiesContext
     @WithMockUser(roles = "ADMIN")
     void givenValidRequest_whenSaveChef_thenReturn201() throws Exception {
         // given
@@ -85,6 +94,7 @@ class ChefControllerIT {
     }
 
     @Test
+    @DirtiesContext
     @WithMockUser(roles = "ADMIN")
     void givenInvalidRequest_whenSaveChef_thenReturn400() throws Exception {
         // given
@@ -98,11 +108,86 @@ class ChefControllerIT {
     }
 
     @Test
+    void givenNoAuth_whenSaveChef_thenReturn403() throws Exception {
+        // given
+        ChefRequestDTO dto = ControllerTestData.validChefRequestDto();
+
+        // when + then
+        mockMvc.perform(post("/v1/chefs")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser(roles = "ADMIN")
+    void givenValidRequest_whenUpdateChef_thenReturn200() throws Exception {
+        // given
+        ChefRequestDTO dto = ControllerTestData.validChefRequestDto();
+
+        // when + then
+        mockMvc.perform(put("/v1/chefs/" + EXISTING_CHEF_ID)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value(dto.name()));
+    }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser(roles = "ADMIN")
+    void givenInvalidRequest_whenUpdateChef_thenReturn400() throws Exception {
+        // given
+        ChefRequestDTO invalidDto = ControllerTestData.invalidChefRequestDto();
+
+        // when + then
+        mockMvc.perform(put("/v1/chefs/" + EXISTING_CHEF_ID)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(invalidDto)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void givenNonExistentId_whenUpdateChef_thenReturn404() throws Exception {
+        // given
+        ChefRequestDTO dto = ControllerTestData.validChefRequestDto();
+
+        // when + then
+        mockMvc.perform(put("/v1/chefs/" + UUID.randomUUID())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void givenNoAuth_whenUpdateChef_thenReturn403() throws Exception {
+        // given
+        ChefRequestDTO dto = ControllerTestData.validChefRequestDto();
+
+        // when + then
+        mockMvc.perform(put("/v1/chefs/" + EXISTING_CHEF_ID)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DirtiesContext
     @WithMockUser(roles = "ADMIN")
     void givenAdmin_whenDeleteChef_thenReturn204() throws Exception {
         // when + then
         mockMvc.perform(delete("/v1/chefs/" + EXISTING_CHEF_ID))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @WithMockUser(roles = "MODERATOR")
+    void givenModerator_whenDeleteChef_thenReturn403() throws Exception {
+        // when + then
+        mockMvc.perform(delete("/v1/chefs/" + EXISTING_CHEF_ID))
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -115,11 +200,8 @@ class ChefControllerIT {
     @Test
     @WithMockUser(roles = "ADMIN")
     void givenInvalidId_whenDeleteChef_thenReturn404() throws Exception {
-        // given
-        UUID invalidId = UUID.randomUUID();
-
         // when + then
-        mockMvc.perform(delete("/v1/chefs/" + invalidId))
+        mockMvc.perform(delete("/v1/chefs/" + UUID.randomUUID()))
                 .andExpect(status().isNotFound());
     }
 }

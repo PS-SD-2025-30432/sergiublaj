@@ -21,7 +21,6 @@
         <jackson.version>2.15.0</jackson.version>
         <java.version>23</java.version>
         <jjwt.version>0.12.6</jjwt.version>
-        <junit.version>5.12.1</junit.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <lombok.version>1.18.36</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
@@ -264,11 +263,6 @@
                                 <version>${lombok-mapstruct.version}</version>
                             </dependency>
                         </annotationProcessorPaths>
-                        <compilerArgs>
-                            <compilerArg>
-                                -Amapstruct.defaultComponentModel=spring
-                            </compilerArg>
-                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
