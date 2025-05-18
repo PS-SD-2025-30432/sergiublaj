@@ -1,5 +1,5 @@
 export interface ChefBase {
   name: string;
-  cnp: number;
-  birthDate: Date;
+  cnp: string;
+  birthDate: string;
 }
