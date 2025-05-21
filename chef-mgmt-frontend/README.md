@@ -1,59 +1,25 @@
 # ChefMgmtFrontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+# login page
+![image](https://github.com/user-attachments/assets/b43262b7-5994-4fda-8531-cca6b7fc650a)
 
-## Development server
+# home page
+![image](https://github.com/user-attachments/assets/f962084d-03b4-406d-bdf2-c79b9e0f20eb)
 
-To start a local development server, run:
+# about page
+![image](https://github.com/user-attachments/assets/60a26f18-95a6-4cec-8992-12986e3b0225)
 
-```bash
-ng serve
-```
+# profile page
+![image](https://github.com/user-attachments/assets/6aa3f237-2054-43a3-9955-41259485f749)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+# chefs page
+![image](https://github.com/user-attachments/assets/f40dd048-9d54-4fcc-a8ae-72131f8e4433)
 
-## Code scaffolding
+# chef page
+![image](https://github.com/user-attachments/assets/97cf975a-9127-4661-8b1e-618bd886b505)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+# not found page
+![image](https://github.com/user-attachments/assets/55873ca3-9d75-463c-91b3-327d48832f4a)
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+# forbidden page
+![image](https://github.com/user-attachments/assets/62cf32b4-4c6c-4a2f-9545-73f0391c6309)
