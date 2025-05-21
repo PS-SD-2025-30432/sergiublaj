@@ -23,7 +23,7 @@ describe('ChefsComponent', () => {
             },
             paramMap: of(convertToParamMap({})),
             queryParams: of({}),
-            queryParamMap: of(convertToParamMap({ searchBy: '', page: '0' })) // ✅ this is the fix
+            queryParamMap: of(convertToParamMap({ searchBy: '', page: '0' }))
           }
         }
       ]
