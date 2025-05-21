@@ -23,3 +23,6 @@
 
 # forbidden page
 ![image](https://github.com/user-attachments/assets/62cf32b4-4c6c-4a2f-9545-73f0391c6309)
+
+# ppt
+![image](https://github.com/user-attachments/assets/92865b5b-a437-4fc4-abfb-9822174c7e9c)
